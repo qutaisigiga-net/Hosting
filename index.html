@@ -23,7 +23,7 @@
             </div>
             <div>
                 <span class="text-xl font-bold tracking-wider bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">AERO HOST</span>
-                <span class="text-xs block text-slate-400 mono">v3.5 Cloud Platform</span>
+                <span class="text-xs block text-slate-400 mono">v4.0 Cloud Platform</span>
             </div>
         </div>
         <div class="flex items-center space-x-4">
@@ -64,7 +64,7 @@
             <div id="empty-state" class="hidden text-center py-16 glass rounded-2xl border border-dashed border-slate-800">
                 <i data-lucide="folder-open" class="w-12 h-12 text-slate-600 mx-auto mb-3"></i>
                 <h3 class="text-lg font-medium text-slate-300">ჯერ საიტები არ არის</h3>
-                <p class="text-sm text-slate-500 mt-1">შექმენი შენი საიტი დომენით!</p>
+                <p class="text-sm text-slate-500 mt-1">შექმენი შენი საიტი .mrx დომენით!</p>
             </div>
         </div>
     </main>
@@ -85,10 +85,9 @@
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">სასურველი სახელი (დომენი)</label>
                     <div class="flex items-center bg-slate-900 border border-slate-700 rounded-xl overflow-hidden focus-within:border-cyan-500">
-                        <input type="text" id="site-slug" required placeholder="მაგ: my-site" class="w-full bg-transparent px-4 py-2.5 text-sm focus:outline-none text-white">
+                        <input type="text" id="site-slug" required placeholder="მაგ: giorgi" class="w-full bg-transparent px-4 py-2.5 text-sm focus:outline-none text-white">
                         <span class="px-3 text-xs mono text-cyan-400 bg-slate-800/80 py-3 border-l border-slate-700">.mrx</span>
                     </div>
-                    <span class="text-[10px] text-slate-500 mt-1 block">გამოიყენე მხოლოდ ლათინური ასოები და ტირე (-)</span>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">HTML / CSS კოდი</label>
@@ -114,10 +113,10 @@
     <script>
         lucide.createIcons();
 
-        let sites = JSON.parse(localStorage.getItem('aero_sites_v2')) || [];
+        let sites = JSON.parse(localStorage.getItem('aero_sites_v3')) || [];
 
         function saveSites() {
-            localStorage.setItem('aero_sites_v2', JSON.stringify(sites));
+            localStorage.setItem('aero_sites_v3', JSON.stringify(sites));
             renderSites();
         }
 
@@ -139,7 +138,7 @@
                         <div class="flex justify-between items-start mb-2">
                             <h4 class="font-bold text-base text-slate-200">${site.slug}.mrx</h4>
                         </div>
-                        <p class="text-xs text-cyan-400 mono mb-4">/${site.slug}</p>
+                        <p class="text-xs text-cyan-400 mono mb-4">${site.slug}.mrx</p>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
                         <button onclick="previewSite('${site.slug}')" class="text-xs bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1">
@@ -169,7 +168,6 @@
                 return;
             }
 
-            // შემოწმება ხომ არ არსებობს უკვე ასეთი სახელი
             if (sites.some(s => s.slug === slug)) {
                 alert("ეს სახელი დაკავებულია! სცადე სხვა.");
                 return;
@@ -201,7 +199,10 @@
         }
 
         function copyDomainLink(slug, index) {
-            const fullUrl = window.location.origin + window.location.pathname + "#/site/" + slug;
+            // ახლა ლინკი გენერირდება სუფთად: .../giorgi.mrx
+            const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '');
+            const fullUrl = baseUrl + "/" + slug + ".mrx";
+            
             navigator.clipboard.writeText(fullUrl);
             
             const btn = document.getElementById(`copy-btn-${index}`);
@@ -214,10 +215,10 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            const hash = window.location.hash;
-            if (hash.startsWith('#/site/')) {
-                const slug = hash.replace('#/site/', '');
-                // ვეძებთ საიტს ჯერ ლოკალურად, ან ვცდილობთ გამოვიტანოთ
+            const path = window.location.pathname;
+            // ამოწმებს თუ ბოლოში აწერია .mrx
+            if (path.endsWith('.mrx')) {
+                const slug = path.split('/').pop().replace('.mrx', '');
                 let foundSite = sites.find(s => s.slug === slug);
                 if (foundSite) {
                     try {
