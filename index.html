@@ -23,7 +23,7 @@
             </div>
             <div>
                 <span class="text-xl font-bold tracking-wider bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">AERO HOST</span>
-                <span class="text-xs block text-slate-400 mono">v2.5 Cloud Platform</span>
+                <span class="text-xs block text-slate-400 mono">v3.5 Cloud Platform</span>
             </div>
         </div>
         <div class="flex items-center space-x-4">
@@ -44,8 +44,8 @@
                         <span id="total-sites" class="mono font-bold text-cyan-400">0</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <span class="text-slate-400 text-sm">რესურსების მოხმარება:</span>
-                        <span class="mono font-bold text-emerald-400">0.0% (Zero Load)</span>
+                        <span class="text-slate-400 text-sm">სტატუსი:</span>
+                        <span class="mono text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Online</span>
                     </div>
                 </div>
             </div>
@@ -64,6 +64,7 @@
             <div id="empty-state" class="hidden text-center py-16 glass rounded-2xl border border-dashed border-slate-800">
                 <i data-lucide="folder-open" class="w-12 h-12 text-slate-600 mx-auto mb-3"></i>
                 <h3 class="text-lg font-medium text-slate-300">ჯერ საიტები არ არის</h3>
+                <p class="text-sm text-slate-500 mt-1">შექმენი შენი საიტი დომენით!</p>
             </div>
         </div>
     </main>
@@ -73,7 +74,7 @@
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-lg font-bold flex items-center space-x-2">
                     <i data-lucide="code" class="w-5 h-5 text-cyan-400"></i>
-                    <span>საიტის შექმნა და ჰოსტინგი</span>
+                    <span>საიტის შექმნა და დომენი</span>
                 </h3>
                 <button onclick="closeDeployModal()" class="text-slate-400 hover:text-white">
                     <i data-lucide="x" class="w-5 h-5"></i>
@@ -82,16 +83,19 @@
 
             <form id="deploy-form" onsubmit="handleDeploy(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">საიტის სახელი / სათაური</label>
-                    <input type="text" id="site-name" required placeholder="მაგ: My Cool Portfolio" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-cyan-500 text-white">
+                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">სასურველი სახელი (დომენი)</label>
+                    <div class="flex items-center bg-slate-900 border border-slate-700 rounded-xl overflow-hidden focus-within:border-cyan-500">
+                        <input type="text" id="site-slug" required placeholder="მაგ: my-site" class="w-full bg-transparent px-4 py-2.5 text-sm focus:outline-none text-white">
+                        <span class="px-3 text-xs mono text-cyan-400 bg-slate-800/80 py-3 border-l border-slate-700">.mrx</span>
+                    </div>
+                    <span class="text-[10px] text-slate-500 mt-1 block">გამოიყენე მხოლოდ ლათინური ასოები და ტირე (-)</span>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">HTML / CSS კოდი</label>
                     <textarea id="site-code" rows="6" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm mono focus:outline-none focus:border-cyan-500 text-cyan-300">&lt;h1&gt;გამარჯობა მსოფლიო!&lt;/h1&gt;</textarea>
                 </div>
-                <button type="submit" id="deploy-btn" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold py-3 rounded-xl shadow-lg hover:opacity-90 transition-all flex items-center justify-center space-x-2">
-                    <i data-lucide="upload-cloud" class="w-5 h-5"></i>
-                    <span>საიტის გაშვება (Deploy)</span>
+                <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold py-3 rounded-xl shadow-lg hover:opacity-90 transition-all">
+                    საიტის გაშვება (Deploy)
                 </button>
             </form>
         </div>
@@ -110,10 +114,10 @@
     <script>
         lucide.createIcons();
 
-        let sites = JSON.parse(localStorage.getItem('aero_sites')) || [];
+        let sites = JSON.parse(localStorage.getItem('aero_sites_v2')) || [];
 
         function saveSites() {
-            localStorage.setItem('aero_sites', JSON.stringify(sites));
+            localStorage.setItem('aero_sites_v2', JSON.stringify(sites));
             renderSites();
         }
 
@@ -133,17 +137,16 @@
                 <div class="glass p-5 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-cyan-500/50 transition-all">
                     <div>
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-base text-slate-200">${site.name}</h4>
-                            <span class="text-[10px] mono bg-slate-800 text-slate-400 px-2 py-0.5 rounded">ID: #${site.id}</span>
+                            <h4 class="font-bold text-base text-slate-200">${site.slug}.mrx</h4>
                         </div>
-                        <p class="text-xs text-slate-400 mono mb-4">/sites/${site.name.toLowerCase().replace(/\s+/g, '-')}</p>
+                        <p class="text-xs text-cyan-400 mono mb-4">/${site.slug}</p>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
-                        <button onclick="previewSite(${site.id})" class="text-xs bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1">
+                        <button onclick="previewSite('${site.slug}')" class="text-xs bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1">
                             <i data-lucide="eye" class="w-3.5 h-3.5"></i>
                             <span>ნახვა</span>
                         </button>
-                        <button id="copy-btn-${index}" onclick="copyShortLink('${site.binId}', ${index})" class="text-xs bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1">
+                        <button id="copy-btn-${index}" onclick="copyDomainLink('${site.slug}', ${index})" class="text-xs bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1">
                             <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                             <span>ლინკი</span>
                         </button>
@@ -156,52 +159,39 @@
         function openDeployModal() { document.getElementById('deploy-modal').classList.remove('hidden'); }
         function closeDeployModal() { document.getElementById('deploy-modal').classList.add('hidden'); }
 
-        async function handleDeploy(e) {
+        function handleDeploy(e) {
             e.preventDefault();
-            const name = document.getElementById('site-name').value;
+            let slug = document.getElementById('site-slug').value.toLowerCase().replace(/[^a-z0-9-]/g, '');
             const code = document.getElementById('site-code').value;
-            const btn = document.getElementById('deploy-btn');
 
-            btn.innerText = "იტვირთება...";
-            btn.disabled = true;
-
-            try {
-                const res = await fetch('https://api.jsonbin.io/v3/b', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Bin-Private': 'false'
-                    },
-                    body: JSON.stringify({ code: code })
-                });
-
-                const data = await res.json();
-                const binId = data.metadata.id;
-
-                const newSite = {
-                    id: Date.now().toString().slice(-4),
-                    name: name,
-                    code: code,
-                    binId: binId
-                };
-
-                sites.unshift(newSite);
-                saveSites();
-                closeDeployModal();
-                document.getElementById('deploy-form').reset();
-            } catch (err) {
-                console.error(err);
-            } finally {
-                btn.innerText = "საიტის გაშვება (Deploy)";
-                btn.disabled = false;
+            if (!slug) {
+                alert("გთხოვთ შეიყვანოთ სწორი სახელი!");
+                return;
             }
+
+            // შემოწმება ხომ არ არსებობს უკვე ასეთი სახელი
+            if (sites.some(s => s.slug === slug)) {
+                alert("ეს სახელი დაკავებულია! სცადე სხვა.");
+                return;
+            }
+
+            const newSite = {
+                slug: slug,
+                code: encodeURIComponent(btoa(unescape(encodeURIComponent(code))))
+            };
+
+            sites.unshift(newSite);
+            saveSites();
+            closeDeployModal();
+            document.getElementById('deploy-form').reset();
         }
 
-        function previewSite(id) {
-            const site = sites.find(s => s.id == id);
+        function previewSite(slug) {
+            const site = sites.find(s => s.slug === slug);
             if (!site) return;
-            document.getElementById('preview-title').innerText = site.name + " — Preview";
-            document.getElementById('preview-iframe').srcdoc = site.code;
+            const decodedCode = decodeURIComponent(escape(window.atob(decodeURIComponent(site.code))));
+            document.getElementById('preview-title').innerText = site.slug + ".mrx — Preview";
+            document.getElementById('preview-iframe').srcdoc = decodedCode;
             document.getElementById('preview-modal').classList.remove('hidden');
         }
 
@@ -210,39 +200,39 @@
             document.getElementById('preview-iframe').srcdoc = '';
         }
 
-        function copyShortLink(binId, index) {
-            const shortUrl = window.location.origin + window.location.pathname + "#/s/" + binId;
-            navigator.clipboard.writeText(shortUrl);
+        function copyDomainLink(slug, index) {
+            const fullUrl = window.location.origin + window.location.pathname + "#/site/" + slug;
+            navigator.clipboard.writeText(fullUrl);
             
             const btn = document.getElementById(`copy-btn-${index}`);
-            btn.innerText = "დაკოპირდა!";
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "<span>დაკოპირდა!</span>";
             setTimeout(() => {
-                renderSites();
+                btn.innerHTML = originalText;
+                lucide.createIcons();
             }, 1500);
         }
 
-        async function checkRoute() {
+        window.addEventListener('DOMContentLoaded', () => {
             const hash = window.location.hash;
-            if (hash.startsWith('#/s/')) {
-                const binId = hash.replace('#/s/', '');
-                try {
-                    const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}`);
-                    const data = await res.json();
-                    if (data.record && data.record.code) {
+            if (hash.startsWith('#/site/')) {
+                const slug = hash.replace('#/site/', '');
+                // ვეძებთ საიტს ჯერ ლოკალურად, ან ვცდილობთ გამოვიტანოთ
+                let foundSite = sites.find(s => s.slug === slug);
+                if (foundSite) {
+                    try {
+                        const code = decodeURIComponent(escape(window.atob(decodeURIComponent(foundSite.code))));
                         document.open();
-                        document.write(data.record.code);
+                        document.write(code);
                         document.close();
+                        return;
+                    } catch (err) {
+                        console.error(err);
                     }
-                } catch (e) {
-                    console.error("Error loading site", e);
                 }
-            } else {
-                renderSites();
             }
-        }
-
-        window.addEventListener('DOMContentLoaded', checkRoute);
-        window.addEventListener('hashchange', checkRoute);
+            renderSites();
+        });
     </script>
 </body>
 </html>
