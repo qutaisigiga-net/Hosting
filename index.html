@@ -49,16 +49,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="glass p-6 rounded-2xl border border-slate-800/80 bg-gradient-to-b from-cyan-950/20 to-transparent">
-                <h4 class="font-bold text-cyan-400 mb-2 flex items-center space-x-2">
-                    <i data-lucide="shield-check" class="w-4 h-4"></i>
-                    <span>როგორ მუშაობს?</span>
-                </h4>
-                <p class="text-xs text-slate-400 leading-relaxed">
-                    ნებისმიერ მომხმარებელს შეუძლია ატვირთოს თავისი HTML კოდი. პლატფორმა ავტომატურად უგენერირებს ცოცხალ ბმულს.
-                </p>
-            </div>
         </div>
 
         <div class="lg:col-span-3 space-y-6">
@@ -74,7 +64,6 @@
             <div id="empty-state" class="hidden text-center py-16 glass rounded-2xl border border-dashed border-slate-800">
                 <i data-lucide="folder-open" class="w-12 h-12 text-slate-600 mx-auto mb-3"></i>
                 <h3 class="text-lg font-medium text-slate-300">ჯერ საიტები არ არის</h3>
-                <p class="text-sm text-slate-500 mt-1">დააჭირეთ ღილაკს „ახალი საიტის დაპლოვება“ და შექმენით პირველი ვებ-გვერდი!</p>
             </div>
         </div>
     </main>
@@ -100,7 +89,7 @@
                     <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">HTML / CSS კოდი</label>
                     <textarea id="site-code" rows="6" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm mono focus:outline-none focus:border-cyan-500 text-cyan-300">&lt;h1&gt;გამარჯობა მსოფლიო!&lt;/h1&gt;</textarea>
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold py-3 rounded-xl shadow-lg hover:opacity-90 transition-all flex items-center justify-center space-x-2">
+                <button type="submit" id="deploy-btn" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold py-3 rounded-xl shadow-lg hover:opacity-90 transition-all flex items-center justify-center space-x-2">
                     <i data-lucide="upload-cloud" class="w-5 h-5"></i>
                     <span>საიტის გაშვება (Deploy)</span>
                 </button>
@@ -140,7 +129,7 @@
             }
 
             emptyState.classList.add('hidden');
-            container.innerHTML = sites.map(site => `
+            container.innerHTML = sites.map((site, index) => `
                 <div class="glass p-5 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-cyan-500/50 transition-all">
                     <div>
                         <div class="flex justify-between items-start mb-2">
@@ -154,12 +143,9 @@
                             <i data-lucide="eye" class="w-3.5 h-3.5"></i>
                             <span>ნახვა</span>
                         </button>
-                        <button onclick="copyShareLink('${encodeURIComponent(site.code)}')" class="text-xs bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1">
+                        <button id="copy-btn-${index}" onclick="copyShortLink('${site.binId}', ${index})" class="text-xs bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1">
                             <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                             <span>ლინკი</span>
-                        </button>
-                        <button onclick="deleteSite(${site.id})" class="text-xs text-red-400 hover:bg-red-500/10 px-2.5 py-1.5 rounded-lg">
-                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                         </button>
                     </div>
                 </div>
@@ -170,25 +156,49 @@
         function openDeployModal() { document.getElementById('deploy-modal').classList.remove('hidden'); }
         function closeDeployModal() { document.getElementById('deploy-modal').classList.add('hidden'); }
 
-        function handleDeploy(e) {
+        async function handleDeploy(e) {
             e.preventDefault();
             const name = document.getElementById('site-name').value;
             const code = document.getElementById('site-code').value;
+            const btn = document.getElementById('deploy-btn');
 
-            const newSite = {
-                id: Date.now(),
-                name: name,
-                code: code
-            };
+            btn.innerText = "იტვირთება...";
+            btn.disabled = true;
 
-            sites.unshift(newSite);
-            saveSites();
-            closeDeployModal();
-            document.getElementById('deploy-form').reset();
+            try {
+                const res = await fetch('https://api.jsonbin.io/v3/b', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Bin-Private': 'false'
+                    },
+                    body: JSON.stringify({ code: code })
+                });
+
+                const data = await res.json();
+                const binId = data.metadata.id;
+
+                const newSite = {
+                    id: Date.now().toString().slice(-4),
+                    name: name,
+                    code: code,
+                    binId: binId
+                };
+
+                sites.unshift(newSite);
+                saveSites();
+                closeDeployModal();
+                document.getElementById('deploy-form').reset();
+            } catch (err) {
+                console.error(err);
+            } finally {
+                btn.innerText = "საიტის გაშვება (Deploy)";
+                btn.disabled = false;
+            }
         }
 
         function previewSite(id) {
-            const site = sites.find(s => s.id === id);
+            const site = sites.find(s => s.id == id);
             if (!site) return;
             document.getElementById('preview-title').innerText = site.name + " — Preview";
             document.getElementById('preview-iframe').srcdoc = site.code;
@@ -200,28 +210,39 @@
             document.getElementById('preview-iframe').srcdoc = '';
         }
 
-        function deleteSite(id) {
-            sites = sites.filter(s => s.id !== id);
-            saveSites();
+        function copyShortLink(binId, index) {
+            const shortUrl = window.location.origin + window.location.pathname + "#/s/" + binId;
+            navigator.clipboard.writeText(shortUrl);
+            
+            const btn = document.getElementById(`copy-btn-${index}`);
+            btn.innerText = "დაკოპირდა!";
+            setTimeout(() => {
+                renderSites();
+            }, 1500);
         }
 
-        function copyShareLink(encodedCode) {
-            const fullUrl = window.location.origin + window.location.pathname + "#site=" + encodedCode;
-            navigator.clipboard.writeText(fullUrl);
-            alert("ლინკი დაკოპირებულია! გაუგზავნე მეგობარს.");
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
+        async function checkRoute() {
             const hash = window.location.hash;
-            if (hash.startsWith('#site=')) {
-                const code = decodeURIComponent(hash.replace('#site=', ''));
-                document.open();
-                document.write(code);
-                document.close();
+            if (hash.startsWith('#/s/')) {
+                const binId = hash.replace('#/s/', '');
+                try {
+                    const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}`);
+                    const data = await res.json();
+                    if (data.record && data.record.code) {
+                        document.open();
+                        document.write(data.record.code);
+                        document.close();
+                    }
+                } catch (e) {
+                    console.error("Error loading site", e);
+                }
             } else {
                 renderSites();
             }
-        });
+        }
+
+        window.addEventListener('DOMContentLoaded', checkRoute);
+        window.addEventListener('hashchange', checkRoute);
     </script>
 </body>
 </html>
