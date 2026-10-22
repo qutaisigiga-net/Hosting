@@ -1,267 +1,295 @@
 <!DOCTYPE html>
 <html lang="ka" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AERO HOST — Cloud Hosting Platform</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        body { font-family: 'Space Grotesk', sans-serif; }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .glass { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .glow { box-shadow: 0 0 25px rgba(0, 242, 254, 0.2); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AERO HOST — Cloud Hosting Platform</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.0.0"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+body{font-family:'Space Grotesk',sans-serif}
+.mono{font-family:'JetBrains Mono',monospace}
+.glass{background:rgba(15,23,42,.75);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.1)}
+.glow{box-shadow:0 0 25px rgba(0,242,254,.2)}
+.btn{font-size:12px;padding:6px 10px;border-radius:8px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+</style>
 </head>
 <body class="bg-[#07090E] text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-black">
 
-    <header class="glass sticky top-0 z-50 px-6 py-4 flex items-center justify-between border-b border-slate-800">
-        <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center glow">
-                <i data-lucide="cloud-lightning" class="w-6 h-6 text-white"></i>
-            </div>
-            <div>
-                <span class="text-xl font-bold tracking-wider bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">AERO HOST</span>
-                <span class="text-xs block text-slate-400 mono">v4.5 Cloud Platform</span>
-            </div>
-        </div>
-        <div class="flex items-center space-x-4">
-            <button onclick="openDeployModal()" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-bold px-5 py-2.5 rounded-xl shadow-lg transition-all transform hover:scale-105 flex items-center space-x-2 text-sm">
-                <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                <span>ახალი საიტის დაპლოივება</span>
-            </button>
-        </div>
-    </header>
-
-    <main class="flex-1 max-w-7xl w-full mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
-        <div class="space-y-6">
-            <div class="glass p-6 rounded-2xl border border-slate-800/80">
-                <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">პლატფორმის სტატისტიკა</h3>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <span class="text-slate-400 text-sm">სულ ჰოსტები:</span>
-                        <span id="total-sites" class="mono font-bold text-cyan-400">0</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-slate-400 text-sm">სტატუსი:</span>
-                        <span class="mono text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Online</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="lg:col-span-3 space-y-6">
-            <div class="flex justify-between items-center">
-                <h2 class="text-xl font-bold flex items-center space-x-2">
-                    <i data-lucide="globe" class="w-5 h-5 text-cyan-400"></i>
-                    <span>აქტიური საიტები პლატფორმაზე</span>
-                </h2>
-            </div>
-
-            <div id="sites-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-
-            <div id="empty-state" class="hidden text-center py-16 glass rounded-2xl border border-dashed border-slate-800">
-                <i data-lucide="folder-open" class="w-12 h-12 text-slate-600 mx-auto mb-3"></i>
-                <h3 class="text-lg font-medium text-slate-300">ჯერ საიტები არ არის</h3>
-                <p class="text-sm text-slate-500 mt-1">შექმენი შენი საიტი .mrx დომენით!</p>
-            </div>
-        </div>
-    </main>
-
-    <div id="deploy-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="glass max-w-lg w-full p-6 rounded-3xl border border-slate-700 shadow-2xl relative">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-lg font-bold flex items-center space-x-2">
-                    <i data-lucide="code" class="w-5 h-5 text-cyan-400"></i>
-                    <span>საიტის შექმნა და დომენი</span>
-                </h3>
-                <button onclick="closeDeployModal()" class="text-slate-400 hover:text-white">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <form id="deploy-form" onsubmit="handleDeploy(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">სასურველი სახელი (დომენი)</label>
-                    <div class="flex items-center bg-slate-900 border border-slate-700 rounded-xl overflow-hidden focus-within:border-cyan-500">
-                        <input type="text" id="site-slug" required placeholder="მაგ: giorgi" class="w-full bg-transparent px-4 py-2.5 text-sm focus:outline-none text-white">
-                        <span class="px-3 text-xs mono text-cyan-400 bg-slate-800/80 py-3 border-l border-slate-700">.mrx</span>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between items-center mb-1">
-                        <label class="block text-xs font-semibold text-slate-400 uppercase">HTML / CSS კოდი</label>
-                        <button type="button" onclick="previewCurrentInput()" class="text-xs text-cyan-400 hover:underline flex items-center space-x-1">
-                            <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                            <span>გადახედვა</span>
-                        </button>
-                    </div>
-                    <textarea id="site-code" rows="6" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm mono focus:outline-none focus:border-cyan-500 text-cyan-300">&lt;h1&gt;გამარჯობა მსოფლიო!&lt;/h1&gt;</textarea>
-                </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold py-3 rounded-xl shadow-lg hover:opacity-90 transition-all">
-                    საიტის გაშვება (Deploy)
-                </button>
-            </form>
-        </div>
+<header class="glass sticky top-0 z-40 px-4 sm:px-6 py-4 flex items-center justify-between border-b border-slate-800">
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center glow"><i data-lucide="cloud-lightning" class="w-6 h-6 text-white"></i></div>
+    <div>
+      <span class="text-xl font-bold tracking-wider bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">AERO HOST</span>
+      <span class="text-xs block text-slate-400 mono">v5.0 Cloud Platform</span>
     </div>
+  </div>
+  <button id="new-btn" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold px-4 py-2.5 rounded-xl shadow-lg hover:scale-105 transition flex items-center gap-2 text-sm">
+    <i data-lucide="plus-circle" class="w-4 h-4"></i><span>ახალი საიტი</span>
+  </button>
+</header>
 
-    <div id="preview-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex flex-col">
-        <div class="glass px-6 py-3 flex justify-between items-center border-b border-slate-800">
-            <span id="preview-title" class="font-bold text-sm text-slate-200">საიტის გადახედვა</span>
-            <button onclick="closePreviewModal()" class="bg-slate-800 hover:bg-slate-700 px-4 py-1.5 rounded-lg text-xs font-semibold">დახურვა</button>
-        </div>
-        <div class="flex-1 bg-white">
-            <iframe id="preview-iframe" class="w-full h-full border-none"></iframe>
-        </div>
+<main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+  <aside class="space-y-6">
+    <div class="glass p-6 rounded-2xl">
+      <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">სტატისტიკა</h3>
+      <div class="space-y-3 text-sm">
+        <div class="flex justify-between"><span class="text-slate-400">სულ საიტები:</span><span id="total-sites" class="mono font-bold text-cyan-400">0</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">საერთო ზომა:</span><span id="total-size" class="mono text-cyan-400">0 KB</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">სტატუსი:</span><span class="mono text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Online</span></div>
+      </div>
     </div>
+    <div class="glass p-6 rounded-2xl space-y-2">
+      <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">ბექაპი</h3>
+      <button id="export-btn" class="btn w-full justify-center bg-slate-800 hover:bg-slate-700"><i data-lucide="download" class="w-3.5 h-3.5"></i>ექსპორტი (JSON)</button>
+      <button id="import-btn" class="btn w-full justify-center bg-slate-800 hover:bg-slate-700"><i data-lucide="upload" class="w-3.5 h-3.5"></i>იმპორტი</button>
+      <input id="import-file" type="file" accept=".json" class="hidden">
+      <p class="text-[11px] text-slate-500 pt-1">საიტები ინახება შენს ბრაუზერში. ლინკები კი კოდს თავადვე შეიცავს, ამიტომ სხვებსაც უხსნიან.</p>
+    </div>
+  </aside>
 
-    <script>
-        lucide.createIcons();
+  <section class="lg:col-span-3 space-y-5">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <h2 class="text-xl font-bold flex items-center gap-2"><i data-lucide="globe" class="w-5 h-5 text-cyan-400"></i>აქტიური საიტები</h2>
+      <input id="search" placeholder="ძებნა..." class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-cyan-500 sm:w-60">
+    </div>
+    <div id="sites-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    <div id="empty-state" class="hidden text-center py-16 glass rounded-2xl border border-dashed border-slate-800">
+      <i data-lucide="folder-open" class="w-12 h-12 text-slate-600 mx-auto mb-3"></i>
+      <h3 class="text-lg font-medium text-slate-300">საიტები ვერ მოიძებნა</h3>
+      <p class="text-sm text-slate-500 mt-1">შექმენი შენი საიტი .mrx დომენით!</p>
+    </div>
+  </section>
+</main>
 
-        let sites = JSON.parse(localStorage.getItem('aero_sites_v3')) || [];
+<!-- Editor modal -->
+<div id="deploy-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+  <div class="glass max-w-2xl w-full p-6 rounded-3xl border border-slate-700 shadow-2xl max-h-[95vh] overflow-y-auto">
+    <div class="flex justify-between items-center mb-5">
+      <h3 id="modal-title" class="text-lg font-bold flex items-center gap-2"><i data-lucide="code" class="w-5 h-5 text-cyan-400"></i><span>საიტის შექმნა</span></h3>
+      <button id="close-modal" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <form id="deploy-form" class="space-y-4">
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">დომენი</label>
+        <div class="flex items-center bg-slate-900 border border-slate-700 rounded-xl overflow-hidden focus-within:border-cyan-500">
+          <input id="site-slug" required maxlength="40" placeholder="მაგ: giorgi" class="w-full bg-transparent px-4 py-2.5 text-sm focus:outline-none">
+          <span class="px-3 text-xs mono text-cyan-400 bg-slate-800/80 py-3 border-l border-slate-700">.mrx</span>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2 items-center">
+        <select id="template" class="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-xs">
+          <option value="">შაბლონი...</option><option value="hello">მარტივი</option><option value="card">პროფილის ბარათი</option><option value="landing">Landing</option>
+        </select>
+        <button type="button" id="upload-btn" class="btn bg-slate-800 hover:bg-slate-700"><i data-lucide="file-up" class="w-3.5 h-3.5"></i>.html ფაილი</button>
+        <input id="html-file" type="file" accept=".html,.htm,text/html" class="hidden">
+        <button type="button" id="preview-btn" class="btn text-cyan-400 hover:underline ml-auto"><i data-lucide="eye" class="w-3.5 h-3.5"></i>გადახედვა</button>
+      </div>
+      <textarea id="site-code" rows="12" required spellcheck="false" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm mono focus:outline-none focus:border-cyan-500 text-cyan-300"></textarea>
+      <button type="submit" id="submit-btn" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold py-3 rounded-xl hover:opacity-90">გაშვება (Deploy)</button>
+    </form>
+  </div>
+</div>
 
-        function timeAgo(timestamp) {
-            if (!timestamp) return "ახლახანს";
-            const seconds = Math.floor((Date.now() - timestamp) / 1000);
-            if (seconds < 60) return "ახლახანს";
-            const minutes = Math.floor(seconds / 60);
-            if (minutes < 60) return `${minutes} წუთის წინ`;
-            const hours = Math.floor(minutes / 60);
-            if (hours < 24) return `${hours} საათის წინ`;
-            const days = Math.floor(hours / 24);
-            return `${days} დღის წინ`;
-        }
+<!-- Preview modal -->
+<div id="preview-modal" class="fixed inset-0 z-[60] bg-black/90 hidden flex-col">
+  <div class="glass px-4 py-3 flex justify-between items-center border-b border-slate-800">
+    <span id="preview-title" class="font-bold text-sm"></span>
+    <button id="close-preview" class="bg-slate-800 hover:bg-slate-700 px-4 py-1.5 rounded-lg text-xs font-semibold">დახურვა</button>
+  </div>
+  <iframe id="preview-iframe" sandbox="allow-scripts allow-forms allow-popups allow-modals" class="flex-1 w-full bg-white border-none"></iframe>
+</div>
 
-        function saveSites() {
-            localStorage.setItem('aero_sites_v3', JSON.stringify(sites));
-            renderSites();
-        }
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[70] hidden bg-slate-800 border border-slate-600 px-4 py-2 rounded-xl text-sm shadow-xl"></div>
 
-        function renderSites() {
-            const container = document.getElementById('sites-container');
-            const emptyState = document.getElementById('empty-state');
-            document.getElementById('total-sites').innerText = sites.length;
+<script>
+const KEY='aero_sites_v4';
+const SB_URL='https://qknlueyiivdiiejbruns.supabase.co', SB_KEY='sb_publishable_UKW-rDxCOaPC4qmdmiTOZA_7D9TXlMY';
+const DB=!SB_URL.startsWith('PASTE');
+const H={apikey:SB_KEY,'Content-Type':'application/json'};
+const tokens=()=>{try{return JSON.parse(localStorage.getItem('aero_tokens'))||{}}catch{return{}}};
+const setToken=(k,t)=>{const o=tokens();if(t)o[k]=t;else delete o[k];localStorage.setItem('aero_tokens',JSON.stringify(o))};
+const hex=u=>[...u].map(x=>x.toString(16).padStart(2,'0')).join('');
+const rnd=()=>hex(crypto.getRandomValues(new Uint8Array(24)));
+async function sha(t){return hex(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t))))}
+async function dbGet(slug){const r=await fetch(SB_URL+'/rest/v1/sites?select=code&slug=eq.'+encodeURIComponent(slug),{headers:H});if(!r.ok)throw 0;const j=await r.json();return j[0]?j[0].code:null}
+async function dbInsert(slug,code,token){const r=await fetch(SB_URL+'/rest/v1/sites',{method:'POST',headers:H,body:JSON.stringify({slug,code,owner_hash:await sha(token)})});return r.status}
+async function dbRpc(fn,slug,token,code){const b={p_slug:slug,p_token_hash:await sha(token)};if(code!==undefined)b.p_code=code;return (await fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:H,body:JSON.stringify(b)})).ok}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dec=t=>decodeURIComponent(escape(atob(decodeURIComponent(t))));
 
-            if (sites.length === 0) {
-                container.innerHTML = '';
-                emptyState.classList.remove('hidden');
-                return;
-            }
+// ---- storage (+ migration from v3) ----
+function load(){
+  try{
+    const v4=JSON.parse(localStorage.getItem(KEY));
+    if(v4) return v4;
+    const v3=JSON.parse(localStorage.getItem('aero_sites_v3'))||[];
+    return v3.map(s=>{try{return{slug:s.slug,code:dec(s.code),createdAt:s.createdAt||Date.now()}}catch{return null}}).filter(Boolean);
+  }catch{return[]}
+}
+let sites=load(), editing=null;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(sites))}catch{toast('შენახვა ვერ მოხერხდა (მეხსიერება სავსეა?)')}render()}
 
-            emptyState.classList.add('hidden');
-            container.innerHTML = sites.map((site, index) => `
-                <div class="glass p-5 rounded-2xl border border-slate-800 flex flex-col justify-between hover:border-cyan-500/50 transition-all">
-                    <div>
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-base text-slate-200">${site.slug}.mrx</h4>
-                            <span class="text-[10px] mono bg-slate-800/80 text-slate-400 px-2 py-0.5 rounded flex items-center space-x-1">
-                                <i data-lucide="clock" class="w-3 h-3"></i>
-                                <span>${timeAgo(site.createdAt)}</span>
-                            </span>
-                        </div>
-                        <p class="text-xs text-cyan-400 mono mb-4">${site.slug}.mrx</p>
-                    </div>
-                    <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
-                        <button onclick="previewSite('${site.slug}')" class="text-xs bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1">
-                            <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                            <span>ნახვა</span>
-                        </button>
-                        <button id="copy-btn-${index}" onclick="copyDomainLink('${site.slug}', ${index})" class="text-xs bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1">
-                            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                            <span>ლინკი</span>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        }
+// ---- compression for self-contained links ----
+async function pack(str){
+  const cs=new CompressionStream('deflate-raw'),w=cs.writable.getWriter();
+  w.write(new TextEncoder().encode(str));w.close();
+  const buf=new Uint8Array(await new Response(cs.readable).arrayBuffer());
+  let s='';buf.forEach(b=>s+=String.fromCharCode(b));
+  return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+async function unpack(t){
+  const bin=atob(t.replace(/-/g,'+').replace(/_/g,'/'));
+  const ds=new DecompressionStream('deflate-raw'),w=ds.writable.getWriter();
+  w.write(Uint8Array.from(bin,c=>c.charCodeAt(0)));w.close();
+  return new TextDecoder().decode(await new Response(ds.readable).arrayBuffer());
+}
 
-        function openDeployModal() { document.getElementById('deploy-modal').classList.remove('hidden'); }
-        function closeDeployModal() { document.getElementById('deploy-modal').classList.add('hidden'); }
+// ---- helpers ----
+function toast(m){const t=$('toast');t.textContent=m;t.classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.add('hidden'),2200)}
+function timeAgo(ts){
+  const s=Math.floor((Date.now()-ts)/1000);if(!ts||s<60)return'ახლახანს';
+  const m=Math.floor(s/60);if(m<60)return m+' წუთის წინ';
+  const h=Math.floor(m/60);if(h<24)return h+' საათის წინ';
+  return Math.floor(h/24)+' დღის წინ';
+}
+const bytes=s=>new Blob([s]).size;
+const kb=n=>(n/1024).toFixed(1)+' KB';
+const base=()=>location.origin+location.pathname;
+async function linkFor(site){return DB&&tokens()[site.slug]?location.origin+'/'+site.slug:base()+'#v='+await pack(site.code)}
 
-        function handleDeploy(e) {
-            e.preventDefault();
-            let slug = document.getElementById('site-slug').value.toLowerCase().replace(/[^a-z0-9-]/g, '');
-            const code = document.getElementById('site-code').value;
+// ---- render ----
+function render(){
+  const q=$('search').value.trim().toLowerCase();
+  const list=sites.filter(s=>s.slug.includes(q));
+  $('total-sites').textContent=sites.length;
+  $('total-size').textContent=kb(sites.reduce((a,s)=>a+bytes(s.code),0));
+  $('empty-state').classList.toggle('hidden',list.length>0);
+  $('sites-container').innerHTML=list.map(s=>`
+    <div class="glass p-5 rounded-2xl flex flex-col justify-between hover:border-cyan-500/50 transition">
+      <div>
+        <div class="flex justify-between items-start mb-1">
+          <h4 class="font-bold text-slate-200 break-all">${esc(s.slug)}.mrx</h4>
+          <span class="text-[10px] mono bg-slate-800/80 text-slate-400 px-2 py-0.5 rounded whitespace-nowrap">${timeAgo(s.createdAt)}</span>
+        </div>
+        <p class="text-xs text-slate-500 mono mb-4">${kb(bytes(s.code))}</p>
+      </div>
+      <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-800/80" data-slug="${esc(s.slug)}">
+        <button data-act="view" class="btn bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20"><i data-lucide="eye" class="w-3.5 h-3.5"></i>ნახვა</button>
+        <button data-act="open" class="btn bg-indigo-500/10 text-indigo-300 hover:bg-indigo-500/20"><i data-lucide="external-link" class="w-3.5 h-3.5"></i>გახსნა</button>
+        <button data-act="copy" class="btn bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20"><i data-lucide="copy" class="w-3.5 h-3.5"></i>ლინკი</button>
+        <button data-act="edit" class="btn bg-slate-800 hover:bg-slate-700"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button>
+        <button data-act="del" class="btn bg-red-500/10 text-red-400 hover:bg-red-500/20"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+      </div>
+    </div>`).join('');
+  lucide.createIcons();
+}
 
-            if (!slug) {
-                alert("გთხოვთ შეიყვანოთ სწორი სახელი!");
-                return;
-            }
+$('sites-container').addEventListener('click',async e=>{
+  const b=e.target.closest('button[data-act]');if(!b)return;
+  const slug=b.parentElement.dataset.slug,site=sites.find(s=>s.slug===slug);if(!site)return;
+  const act=b.dataset.act;
+  if(act==='view')showPreview(site.code,site.slug+'.mrx');
+  if(act==='open')window.open(await linkFor(site),'_blank');
+  if(act==='copy'){
+    const url=await linkFor(site);
+    try{await navigator.clipboard.writeText(url);toast(url.length>8000?'დაკოპირდა (გრძელი ლინკია, ზოგ აპში შეიძლება არ იმუშაოს)':'ლინკი დაკოპირდა!')}catch{prompt('დააკოპირე:',url)}
+  }
+  if(act==='edit')openModal(site);
+  if(act==='del'&&confirm(slug+'.mrx წაიშალოს?')){const t=tokens()[slug];if(DB&&t)await dbRpc('delete_site',slug,t);setToken(slug,null);sites=sites.filter(s=>s.slug!==slug);save();toast('წაიშალა')}
+});
 
-            if (sites.some(s => s.slug === slug)) {
-                alert("ეს სახელი დაკავებულია! სცადე სხვა.");
-                return;
-            }
+// ---- modal ----
+const TPL={
+  hello:'<h1>გამარჯობა მსოფლიო!</h1>',
+  card:'<!DOCTYPE html><html><body style="margin:0;min-height:100vh;display:grid;place-items:center;background:#0f172a;font-family:sans-serif;color:#fff"><div style="text-align:center;padding:40px;border-radius:24px;background:#1e293b"><div style="font-size:64px">👋</div><h1>შენი სახელი</h1><p style="color:#94a3b8">დეველოპერი · დიზაინერი</p></div></body></html>',
+  landing:'<!DOCTYPE html><html><body style="margin:0;font-family:sans-serif;background:linear-gradient(135deg,#06b6d4,#6366f1);color:#fff;min-height:100vh;display:grid;place-items:center;text-align:center"><div><h1 style="font-size:48px;margin:0">ჩემი პროექტი</h1><p>მოკლე აღწერა აქ</p><a href="#" style="display:inline-block;margin-top:16px;padding:12px 28px;background:#fff;color:#4f46e5;border-radius:12px;text-decoration:none;font-weight:700">დაიწყე</a></div></body></html>'
+};
+function openModal(site){
+  editing=site||null;
+  $('modal-title').querySelector('span').textContent=site?'რედაქტირება':'საიტის შექმნა';
+  $('site-slug').value=site?site.slug:'';$('site-slug').disabled=!!site;
+  $('site-code').value=site?site.code:TPL.hello;
+  $('submit-btn').textContent=site?'შენახვა':'გაშვება (Deploy)';
+  $('deploy-modal').classList.remove('hidden');$('deploy-modal').classList.add('flex');
+}
+function closeModal(){$('deploy-modal').classList.add('hidden');$('deploy-modal').classList.remove('flex')}
+function showPreview(code,title){
+  $('preview-title').textContent=title;$('preview-iframe').srcdoc=code;
+  $('preview-modal').classList.remove('hidden');$('preview-modal').classList.add('flex');
+}
+$('new-btn').onclick=()=>openModal();
+$('close-modal').onclick=closeModal;
+$('close-preview').onclick=()=>{$('preview-modal').classList.add('hidden');$('preview-modal').classList.remove('flex');$('preview-iframe').srcdoc=''};
+$('preview-btn').onclick=()=>showPreview($('site-code').value,'Live Preview');
+$('template').onchange=e=>{if(TPL[e.target.value])$('site-code').value=TPL[e.target.value];e.target.value=''};
+$('upload-btn').onclick=()=>$('html-file').click();
+$('html-file').onchange=async e=>{const f=e.target.files[0];if(f){$('site-code').value=await f.text();toast('ფაილი ჩაიტვირთა')}e.target.value=''};
+$('search').oninput=render;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();$('close-preview').click()}});
 
-            const newSite = {
-                slug: slug,
-                code: encodeURIComponent(btoa(unescape(encodeURIComponent(code)))),
-                createdAt: Date.now()
-            };
+$('deploy-form').onsubmit=async e=>{
+  e.preventDefault();
+  const code=$('site-code').value;
+  if(editing){
+    editing.code=code;
+    if(DB){const t=tokens()[editing.slug];
+      if(t)await dbRpc('update_site',editing.slug,t,code);
+      else{const nt=rnd(),st=await dbInsert(editing.slug,code,nt);if(st<300)setToken(editing.slug,nt);else toast('ეს სახელი ბაზაში დაკავებულია')}}
+    save();closeModal();toast('განახლდა!');return}
+  const slug=$('site-slug').value.toLowerCase().replace(/[^a-z0-9-]/g,'').replace(/^-+|-+$/g,'');
+  if(!slug)return toast('გამოიყენე ლათინური ასოები, ციფრები ან -');
+  if(sites.some(s=>s.slug===slug))return toast('ეს სახელი დაკავებულია!');
+  if(DB){const t=rnd(),st=await dbInsert(slug,code,t);
+    if(st===409)return toast('ეს სახელი დაკავებულია!');
+    if(st>=300)return toast('ბაზის შეცდომა ('+st+')');
+    setToken(slug,t)}
+  sites.unshift({slug,code,createdAt:Date.now()});
+  save();closeModal();toast(slug+'.mrx გაშვებულია!');
+};
 
-            sites.unshift(newSite);
-            saveSites();
-            closeDeployModal();
-            document.getElementById('deploy-form').reset();
-        }
+// ---- backup ----
+$('export-btn').onclick=()=>{
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(sites,null,1)],{type:'application/json'}));
+  a.download='aero-host-backup.json';a.click();
+};
+$('import-btn').onclick=()=>$('import-file').click();
+$('import-file').onchange=async e=>{
+  try{
+    const data=JSON.parse(await e.target.files[0].text());let n=0;
+    data.forEach(s=>{if(s&&s.slug&&typeof s.code==='string'&&!sites.some(x=>x.slug===s.slug)){sites.push({slug:String(s.slug),code:s.code,createdAt:s.createdAt||Date.now()});n++}});
+    save();toast(n+' საიტი დაემატა');
+  }catch{toast('ფაილი არასწორია')}
+  e.target.value='';
+};
 
-        function previewCurrentInput() {
-            const code = document.getElementById('site-code').value;
-            document.getElementById('preview-title').innerText = "Live Preview";
-            document.getElementById('preview-iframe').srcdoc = code;
-            document.getElementById('preview-modal').classList.remove('hidden');
-        }
-
-        function previewSite(slug) {
-            const site = sites.find(s => s.slug === slug);
-            if (!site) return;
-            const decodedCode = decodeURIComponent(escape(window.atob(decodeURIComponent(site.code))));
-            document.getElementById('preview-title').innerText = site.slug + ".mrx — Preview";
-            document.getElementById('preview-iframe').srcdoc = decodedCode;
-            document.getElementById('preview-modal').classList.remove('hidden');
-        }
-
-        function closePreviewModal() {
-            document.getElementById('preview-modal').classList.add('hidden');
-            document.getElementById('preview-iframe').srcdoc = '';
-        }
-
-        function copyDomainLink(slug, index) {
-            const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '');
-            const fullUrl = baseUrl + "/" + slug + ".mrx";
-            
-            navigator.clipboard.writeText(fullUrl);
-            
-            const btn = document.getElementById(`copy-btn-${index}`);
-            const originalText = btn.innerHTML;
-            btn.innerHTML = "<span>დაკოპირდა!</span>";
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                lucide.createIcons();
-            }, 1500);
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const path = window.location.pathname;
-            if (path.endsWith('.mrx')) {
-                const slug = path.split('/').pop().replace('.mrx', '');
-                let foundSite = sites.find(s => s.slug === slug);
-                if (foundSite) {
-                    try {
-                        const code = decodeURIComponent(escape(window.atob(decodeURIComponent(foundSite.code))));
-                        document.open();
-                        document.write(code);
-                        document.close();
-                        return;
-                    } catch (err) {
-                        console.error(err);
-                    }
-                }
-            }
-            renderSites();
-        });
-    </script>
+// ---- viewer mode (visitors) ----
+function viewer(code,name){
+  document.title=name||'AERO HOST';
+  document.body.className='m-0';
+  document.body.innerHTML='<iframe id="v" sandbox="allow-scripts allow-forms allow-popups allow-modals" style="position:fixed;inset:0;width:100%;height:100%;border:0;background:#fff"></iframe>'+
+    '<a href="'+location.origin+'/" style="position:fixed;right:10px;bottom:10px;font:600 11px sans-serif;background:rgba(7,9,14,.85);color:#22d3ee;padding:6px 10px;border-radius:10px;text-decoration:none;z-index:9">⚡ AERO HOST</a>';
+  document.getElementById('v').srcdoc=code;
+}
+(async function init(){
+  const h=location.hash;
+  if(h.startsWith('#v=')){
+    try{return viewer(await unpack(h.slice(3)),'AERO HOST')}catch{}
+  }
+  const slug=decodeURIComponent(location.pathname.replace(/^\/+|\/+$/g,'')).replace(/\.mrx$/,'').replace(/index\.html$/,'').toLowerCase();
+  if(slug&&/^[a-z0-9-]{1,40}$/.test(slug)){
+    let code=null;
+    if(DB){try{code=await dbGet(slug)}catch{}}
+    if(code===null){const x=sites.find(y=>y.slug===slug);if(x)code=x.code}
+    if(code!==null)return viewer(code,slug);
+    document.body.innerHTML='<div style="min-height:100vh;display:grid;place-items:center;font-family:sans-serif;text-align:center;color:#fff"><div><h1>404</h1><p>'+esc(slug)+' ვერ მოიძებნა</p><a href="/" style="color:#22d3ee">მთავარი</a></div></div>';
+    return;
+  }
+  lucide.createIcons();render();
+})();
+</script>
 </body>
 </html>
