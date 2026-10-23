@@ -14,244 +14,411 @@ i[data-i]{display:inline-flex;vertical-align:middle}
 #bg{position:fixed;inset:0;z-index:0}
 .wrap{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding:0 18px 60px}
 .glass{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--b);border-radius:20px}
-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:10px}
 .logo{display:flex;align-items:center;gap:12px}
 .logo b{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--c),var(--i));display:grid;place-items:center;color:#fff;box-shadow:0 0 28px rgba(34,211,238,.35)}
 .grad{background:linear-gradient(90deg,var(--c),#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
 .logo span{font-weight:700;letter-spacing:.08em;font-size:18px}
 .logo small{display:block;color:var(--m);font-size:11px}
-.hero{text-align:center;padding:34px 0 26px}
+#user-box{display:flex;align-items:center;gap:8px;min-width:0}
+#user-box span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px}
+.hero{text-align:center;padding:30px 0 24px}
 .hero h1{font-size:clamp(30px,7vw,54px);line-height:1.1;margin:0 0 12px;font-weight:700}
 .hero p{color:var(--m);margin:0 auto 22px;max-width:520px}
-.cta{border:0;cursor:pointer;color:#04121a;font:700 15px 'Space Grotesk',sans-serif;padding:14px 26px;border-radius:14px;background:linear-gradient(90deg,var(--c),#3b82f6);display:inline-flex;gap:8px;align-items:center;box-shadow:0 8px 30px rgba(34,211,238,.3);transition:.2s}
+.hb{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cta{border:0;cursor:pointer;color:#04121a;font:700 15px 'Space Grotesk',sans-serif;padding:14px 24px;border-radius:14px;background:linear-gradient(90deg,var(--c),#3b82f6);display:inline-flex;gap:8px;align-items:center;box-shadow:0 8px 30px rgba(34,211,238,.3);transition:.2s}
 .cta:hover{transform:translateY(-2px) scale(1.03)}
+.cta.alt{background:rgba(30,41,59,.85);color:var(--t);box-shadow:none;border:1px solid var(--b)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
 .stat{padding:16px;text-align:center}
 .stat b{display:block;font-size:22px;color:var(--c)}
 .stat span{font-size:12px;color:var(--m)}
 .bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
-.bar input[type=text],.bar input:not([type]){flex:1;min-width:150px}
+.bar input:not([type]){flex:1;min-width:140px}
 input,textarea,select{background:rgba(2,6,23,.8);border:1px solid var(--b);color:var(--t);border-radius:12px;padding:11px 14px;font:inherit;font-size:14px;outline:none}
 input:focus,textarea:focus{border-color:var(--c)}
 .btn{border:1px solid var(--b);background:rgba(30,41,59,.7);color:var(--t);cursor:pointer;font:600 12px 'Space Grotesk',sans-serif;padding:9px 12px;border-radius:10px;display:inline-flex;gap:6px;align-items:center;transition:.15s}
 .btn:hover{border-color:var(--c);color:var(--c)}
 .btn.red:hover{border-color:#f87171;color:#f87171}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
-.card{overflow:hidden;transition:.25s;position:relative}
+.card{overflow:hidden;transition:.25s}
 .card:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.5);box-shadow:0 12px 40px rgba(34,211,238,.12)}
-.thumb{height:140px;overflow:hidden;background:#fff;position:relative}
+.thumb{height:140px;overflow:hidden;background:#fff}
 .thumb iframe{width:400%;height:400%;transform:scale(.25);transform-origin:0 0;border:0;pointer-events:none}
 .card .in{padding:14px}
 .card h4{margin:0 0 4px;font-size:16px;word-break:break-all}
-.card .meta{display:flex;justify-content:space-between;color:var(--m);font-size:11px;margin-bottom:12px}
+.card .meta{display:flex;justify-content:space-between;color:var(--m);font-size:11px;margin-bottom:12px;gap:6px}
 .acts{display:flex;flex-wrap:wrap;gap:6px}
 .empty{text-align:center;padding:50px 20px;color:var(--m);border-style:dashed;display:none}
 .modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:14px}
 .modal.open{display:flex}
 .sheet{background:#0b1120;border:1px solid var(--b);border-radius:22px;width:100%;max-width:660px;max-height:94vh;overflow:auto;padding:20px}
 .sheet h3{margin:0;display:flex;align-items:center;gap:8px;font-size:18px}
+.sheet .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.sheet input{width:100%;margin-top:10px}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
 .dom{display:flex;align-items:center;border:1px solid var(--b);border-radius:12px;background:rgba(2,6,23,.8);overflow:hidden}
-.dom input{border:0;flex:1;background:transparent}
+.dom input{border:0;flex:1;background:transparent;margin:0}
 .dom span{padding:0 12px;color:var(--c);font-size:13px}
 textarea{width:100%;color:#67e8f9;resize:vertical;font-family:'JetBrains Mono',monospace}
 #preview-modal{padding:0;flex-direction:column;background:#000;align-items:stretch;justify-content:flex-start}
 #preview-modal .top{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:#0b1120;border-bottom:1px solid var(--b);font-weight:600;font-size:14px}
 #preview-iframe{flex:1;width:100%;border:0;background:#fff}
-#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:90;background:#1e293b;border:1px solid var(--c);padding:10px 18px;border-radius:12px;font-size:14px;display:none;max-width:90vw}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:90;background:#1e293b;border:1px solid var(--c);padding:10px 18px;border-radius:12px;font-size:14px;display:none;max-width:90vw;text-align:center}
 .note{color:#64748b;font-size:11px;text-align:center;margin-top:26px}
+.drop{position:fixed;inset:0;z-index:80;background:rgba(7,9,14,.88);border:3px dashed var(--c);display:none;place-items:center;font-size:22px;color:var(--c)}
+.drop.on{display:grid}
+#live-frame{display:none;width:100%;height:220px;margin-top:10px;border:1px solid var(--b);border-radius:12px;background:#fff}
+.chk{font-size:12px;color:var(--m);display:flex;gap:6px;align-items:center;margin-top:8px}
+.chk input{width:auto;margin:0}
+.err{color:#f87171;font-size:13px;min-height:18px;margin-top:8px}
 </style>
 </head>
 <body>
 <canvas id="bg"></canvas>
 <div class="wrap">
   <nav>
-    <div class="logo"><b><i data-i="bolt" data-s="22"></i></b><div><span class="grad">AERO HOST</span><small class="mono">v6.0 Cloud Platform</small></div></div>
-    <button class="btn" id="new-top"><i data-i="plus"></i>ახალი</button>
+    <div class="logo"><b><i data-i="bolt" data-s="22"></i></b><div><span class="grad">AERO HOST</span><small class="mono">v8.0 Cloud Platform</small></div></div>
+    <div id="user-box"></div>
   </nav>
 
   <section class="hero">
     <h1>გაუშვი საიტი <span class="grad">წამებში</span></h1>
-    <p>ჩასვი HTML კოდი, აირჩიე სახელი და მიიღე ლინკი, რომელიც ყველგან იხსნება.</p>
-    <button class="cta" id="new-btn"><i data-i="plus" data-s="18"></i>ახალი საიტის შექმნა</button>
+    <p>შედი ანგარიშში, ჩასვი კოდი ან იმპორტი გააკეთე GitHub-იდან და მიიღე ლინკი, რომელიც ყველგან იხსნება.</p>
+    <div class="hb">
+      <button class="cta" id="new-btn"><i data-i="plus" data-s="18"></i>ახალი საიტი</button>
+      <button class="cta alt" id="gh-btn"><i data-i="code" data-s="18"></i>GitHub-იდან</button>
+    </div>
   </section>
 
   <div class="stats">
     <div class="glass stat"><b id="total-sites" class="mono">0</b><span>საიტები</span></div>
     <div class="glass stat"><b id="total-size" class="mono">0 KB</b><span>ზომა</span></div>
-    <div class="glass stat"><b class="mono" style="color:#34d399">● Online</b><span>სტატუსი</span></div>
+    <div class="glass stat"><b id="total-views" class="mono">0</b><span>ნახვები</span></div>
   </div>
 
   <div class="bar">
     <input id="search" placeholder="ძებნა...">
+    <select id="sort"><option value="new">ახალი</option><option value="name">სახელი</option><option value="size">ზომა</option><option value="views">ნახვები</option></select>
     <button class="btn" id="export-btn"><i data-i="down"></i>ექსპორტი</button>
     <button class="btn" id="import-btn"><i data-i="up"></i>იმპორტი</button>
     <input id="import-file" type="file" accept=".json" hidden>
   </div>
 
   <div id="sites-container" class="grid"></div>
-  <div id="empty-state" class="glass empty"><i data-i="globe" data-s="40"></i><h3>საიტები ვერ მოიძებნა</h3><p>შექმენი პირველი საიტი ზემოთ!</p></div>
+  <div id="empty-state" class="glass empty"><i data-i="globe" data-s="40"></i><h3>საიტები ვერ მოიძებნა</h3><p id="empty-p">შექმენი პირველი საიტი ზემოთ!</p></div>
   <p class="note mono">AERO HOST · Supabase + Netlify</p>
 </div>
 
+<!-- Editor -->
 <div id="deploy-modal" class="modal"><div class="sheet">
-  <div style="display:flex;justify-content:space-between;align-items:center">
-    <h3 id="modal-title"><i data-i="code" data-s="20"></i><span>საიტის შექმნა</span></h3>
-    <button class="btn" id="close-modal"><i data-i="x"></i></button>
-  </div>
+  <div class="hd"><h3 id="modal-title"><i data-i="code" data-s="20"></i><span>საიტის შექმნა</span></h3><button class="btn" data-close><i data-i="x"></i></button></div>
   <form id="deploy-form">
-    <div class="row"><div class="dom" style="flex:1"><input id="site-slug" required maxlength="40" placeholder="სახელი, მაგ: giorgi"><span class="mono">.mrx</span></div></div>
+    <div class="row"><div class="dom" style="flex:1"><input id="site-slug" required maxlength="40" placeholder="სახელი, მაგ: giorgi"><span class="mono">.mrx</span></div><button type="button" class="btn" id="dice">🎲</button></div>
+    <div id="slug-status" class="mono" style="font-size:12px;min-height:16px;margin:-4px 0 8px"></div>
     <div class="row">
       <select id="template"><option value="">შაბლონი...</option><option value="hello">მარტივი</option><option value="card">პროფილი</option><option value="landing">Landing</option></select>
-      <button type="button" class="btn" id="upload-btn"><i data-i="file"></i>.html ფაილი</button>
+      <button type="button" class="btn" id="upload-btn"><i data-i="file"></i>.html</button>
       <input id="html-file" type="file" accept=".html,.htm,text/html" hidden>
+      <button type="button" class="btn" id="paste-btn">📋 ჩასმა</button>
       <button type="button" class="btn" id="preview-btn" style="margin-left:auto"><i data-i="eye"></i>გადახედვა</button>
     </div>
     <textarea id="site-code" rows="11" required spellcheck="false"></textarea>
+    <label class="chk"><input type="checkbox" id="live"> ცოცხალი გადახედვა წერისას</label><iframe id="live-frame" sandbox="allow-scripts"></iframe>
     <button type="submit" id="submit-btn" class="cta" style="width:100%;justify-content:center;margin-top:12px">გაშვება (Deploy)</button>
   </form>
 </div></div>
 
+<!-- Auth -->
+<div id="auth-modal" class="modal"><div class="sheet" style="max-width:400px">
+  <div class="hd"><h3><i data-i="user" data-s="20"></i><span>შესვლა / რეგისტრაცია</span></h3><button class="btn" data-close><i data-i="x"></i></button></div>
+  <form id="auth-form">
+    <input id="au-email" type="email" placeholder="ელფოსტა" autocomplete="email" required>
+    <input id="au-pass" type="password" placeholder="პაროლი (მინ. 6 სიმბოლო)" autocomplete="current-password" required>
+    <div id="auth-err" class="err"></div>
+    <div class="row"><button type="submit" class="cta" style="flex:1;justify-content:center">შესვლა</button><button type="button" id="au-up" class="cta alt" style="flex:1;justify-content:center">რეგისტრაცია</button></div>
+  </form>
+</div></div>
+
+<!-- GitHub import -->
+<div id="gh-modal" class="modal"><div class="sheet" style="max-width:480px">
+  <div class="hd"><h3><i data-i="code" data-s="20"></i><span>იმპორტი GitHub-იდან</span></h3><button class="btn" data-close><i data-i="x"></i></button></div>
+  <input id="gh-repo" placeholder="owner/repo ან github.com ლინკი">
+  <div class="row" style="margin:0"><input id="gh-branch" placeholder="branch (არასავალდებულო)" style="flex:1"><input id="gh-dir" placeholder="საქაღალდე (არასავალდებულო)" style="flex:1"></div>
+  <button id="gh-go" class="cta" style="width:100%;justify-content:center;margin-top:14px">იმპორტი</button>
+  <p class="note" style="text-align:left">საჯარო რეპოზიტორიები. ეძებს index.html-ს და CSS, JS და სურათებს საიტში ჩააშენებს. მერე ბარათზე 🔄 ღილაკით GitHub-იდან განახლდება.</p>
+</div></div>
+
 <div id="preview-modal" class="modal">
-  <div class="top"><span id="preview-title"></span><button class="btn" id="close-preview">დახურვა</button></div>
+  <div class="top"><span id="preview-title"></span><button class="btn" data-close>დახურვა</button></div>
   <iframe id="preview-iframe" sandbox="allow-scripts allow-forms allow-popups allow-modals"></iframe>
 </div>
+<div id="drop" class="drop">📄 ჩააგდე .html ფაილი</div>
 <div id="toast"></div>
 
 <script>
 const $=id=>document.getElementById(id);
-function toast(m){const t=$('toast');if(!t)return;t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',2600)}
+function toast(m){const t=$('toast');if(!t)return;t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',3000)}
 window.addEventListener('error',e=>toast('შეცდომა: '+e.message));
 
-const KEY='aero_sites_v4';
 const SB_URL='https://qknlueyiivdiiejbruns.supabase.co', SB_KEY='sb_publishable_UKW-rDxCOaPC4qmdmiTOZA_7D9TXlMY';
-const DB=!SB_URL.startsWith('PASTE');
-const H={apikey:SB_KEY,'Content-Type':'application/json'};
 
-// ---- icons (inline, no external library) ----
-const IC={plus:'M12 5v14M5 12h14',eye:'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM12 9a3 3 0 100 6 3 3 0 000-6z',copy:'M9 9h11v11H9zM5 15H4V4h11v1',pencil:'M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4',trash:'M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3',ext:'M14 4h6v6M20 4l-9 9M18 14v6H4V6h6',down:'M12 4v12M7 11l5 5 5-5M4 20h16',up:'M12 16V4M7 9l5-5 5 5M4 20h16',x:'M6 6l12 12M18 6L6 18',bolt:'M13 2L4 14h7l-1 8 9-12h-7l1-8z',globe:'M12 3a9 9 0 100 18 9 9 0 000-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',code:'M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14',file:'M6 3h8l4 4v14H6zM14 3v4h4'};
+// ---- icons ----
+const IC={plus:'M12 5v14M5 12h14',eye:'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM12 9a3 3 0 100 6 3 3 0 000-6z',copy:'M9 9h11v11H9zM5 15H4V4h11v1',pencil:'M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4',trash:'M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3',ext:'M14 4h6v6M20 4l-9 9M18 14v6H4V6h6',down:'M12 4v12M7 11l5 5 5-5M4 20h16',up:'M12 16V4M7 9l5-5 5 5M4 20h16',x:'M6 6l12 12M18 6L6 18',bolt:'M13 2L4 14h7l-1 8 9-12h-7l1-8z',globe:'M12 3a9 9 0 100 18 9 9 0 000-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',code:'M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14',file:'M6 3h8l4 4v14H6zM14 3v4h4',share:'M4 12v7h16v-7M12 3v12M7 8l5-5 5 5',user:'M12 12a4 4 0 100-8 4 4 0 000 8zM4 21a8 8 0 0116 0',sync:'M4 4v6h6M20 20v-6h-6M5 13a8 8 0 0014 3M19 11A8 8 0 005 8'};
 const ic=(n,s=16)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${IC[n]}"/></svg>`;
 const hydrate=()=>document.querySelectorAll('i[data-i]').forEach(e=>{e.innerHTML=ic(e.dataset.i,+e.dataset.s||16)});
 
 // ---- helpers ----
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const dec=t=>decodeURIComponent(escape(atob(decodeURIComponent(t))));
-const tokens=()=>{try{return JSON.parse(localStorage.getItem('aero_tokens'))||{}}catch{return{}}};
-const setToken=(k,t)=>{const o=tokens();if(t)o[k]=t;else delete o[k];localStorage.setItem('aero_tokens',JSON.stringify(o))};
-const hex=u=>[...u].map(x=>x.toString(16).padStart(2,'0')).join('');
-const rnd=()=>hex(crypto.getRandomValues(new Uint8Array(24)));
-async function sha(t){return hex(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t))))}
 const bytes=s=>new Blob([s]).size, kb=n=>(n/1024).toFixed(1)+' KB';
-const base=()=>location.origin+location.pathname;
+const cleanSlug=t=>t.toLowerCase().replace(/[^a-z0-9-]/g,'');
+const rndSlug=()=>'site-'+Math.random().toString(36).slice(2,7);
+const linkOf=s=>location.origin+'/'+s.slug;
 function timeAgo(ts){const s=Math.floor((Date.now()-ts)/1000);if(!ts||s<60)return'ახლახანს';const m=Math.floor(s/60);if(m<60)return m+' წუთის წინ';const h=Math.floor(m/60);if(h<24)return h+' საათის წინ';return Math.floor(h/24)+' დღის წინ'}
+function fix(c){
+  if(!/<html[\s>]/i.test(c))return '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>'+c+'</body></html>';
+  if(!/charset/i.test(c)&&/<head[^>]*>/i.test(c))c=c.replace(/<head[^>]*>/i,m=>m+'<meta charset="utf-8">');
+  if(!/name=["']viewport/i.test(c)&&/<head[^>]*>/i.test(c))c=c.replace(/<head[^>]*>/i,m=>m+'<meta name="viewport" content="width=device-width,initial-scale=1">');
+  return c;
+}
 
-// ---- database ----
-async function dbGet(slug){const r=await fetch(SB_URL+'/rest/v1/sites?select=code&slug=eq.'+encodeURIComponent(slug),{headers:H});if(!r.ok)throw 0;const j=await r.json();return j[0]?j[0].code:null}
-async function dbInsert(slug,code,token){const r=await fetch(SB_URL+'/rest/v1/sites',{method:'POST',headers:H,body:JSON.stringify({slug,code,owner_hash:await sha(token)})});return r.status}
-async function dbRpc(fn,slug,token,code){const b={p_slug:slug,p_token_hash:await sha(token)};if(code!==undefined)b.p_code=code;return(await fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:H,body:JSON.stringify(b)})).ok}
+// ---- auth (Supabase Auth REST) ----
+let sess=null;try{sess=JSON.parse(localStorage.getItem('aero_sess'))}catch{}
+const saveSess=s=>{sess=s;s?localStorage.setItem('aero_sess',JSON.stringify(s)):localStorage.removeItem('aero_sess')};
+const setSess=j=>saveSess({access_token:j.access_token,refresh_token:j.refresh_token,expires_at:Date.now()+(j.expires_in-60)*1000,email:j.user.email,id:j.user.id});
+async function token(){
+  if(!sess)return null;
+  if(Date.now()>sess.expires_at){
+    const r=await fetch(SB_URL+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:sess.refresh_token})});
+    if(!r.ok){saveSess(null);renderUser();return null}
+    setSess(await r.json());
+  }
+  return sess.access_token;
+}
+async function api(path,o={}){
+  const t=await token();
+  return fetch(SB_URL+path,{...o,headers:{apikey:SB_KEY,'Content-Type':'application/json',...(t?{Authorization:'Bearer '+t}:{}),...(o.headers||{})}});
+}
+async function authCall(kind,email,password){
+  const r=await fetch(SB_URL+'/auth/v1/'+(kind==='up'?'signup':'token?grant_type=password'),{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({email,password})});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(j.msg||j.error_description||j.message||'შეცდომა '+r.status);
+  if(!j.access_token)return null;
+  setSess(j);return j;
+}
+const gErr=m=>/already|registered/i.test(m)?'ეს ელფოსტა უკვე რეგისტრირებულია':/invalid login|credentials/i.test(m)?'არასწორი ელფოსტა ან პაროლი':/confirm/i.test(m)?'ჯერ დაადასტურე ელფოსტა':/password/i.test(m)?'პაროლი სუსტია (მინ. 6 სიმბოლო)':/rate|too many/i.test(m)?'ბევრი მცდელობა, სცადე მოგვიანებით':m;
+function renderUser(){
+  $('user-box').innerHTML=sess?`<span class="mono" style="font-size:12px;color:var(--m)">${esc(sess.email)}</span><button class="btn" id="logout">გასვლა</button>`:`<button class="btn" id="login-btn">${ic('user',14)}შესვლა</button>`;
+}
+$('user-box').onclick=e=>{
+  if(e.target.closest('#logout')){saveSess(null);sites=[];renderUser();render();toast('გახვედი ანგარიშიდან')}
+  if(e.target.closest('#login-btn'))openAuth();
+};
+const openAuth=()=>{$('auth-err').textContent='';$('auth-modal').classList.add('open')};
+const needAuth=()=>{if(sess)return false;openAuth();toast('ჯერ შედი ან დარეგისტრირდი');return true};
+async function doAuth(kind){
+  const em=$('au-email').value.trim(),pw=$('au-pass').value;
+  if(!em||pw.length<6){$('auth-err').textContent='ჩაწერე ელფოსტა და პაროლი (მინ. 6 სიმბოლო)';return}
+  $('auth-err').style.color='var(--m)';$('auth-err').textContent='...';
+  try{
+    const j=await authCall(kind,em,pw);
+    if(!j){$('auth-err').style.color='#34d399';$('auth-err').textContent='შეამოწმე ელფოსტა, დაადასტურე და მერე შედი';return}
+    $('auth-modal').classList.remove('open');renderUser();toast('მოგესალმები!');await migrate();await loadSites();
+  }catch(e){$('auth-err').style.color='#f87171';$('auth-err').textContent=gErr(e.message)}
+}
+$('auth-form').onsubmit=e=>{e.preventDefault();doAuth('in')};
+$('au-up').onclick=()=>doAuth('up');
 
-// ---- fallback links (code inside URL) ----
-async function pack(str){const cs=new CompressionStream('deflate-raw'),w=cs.writable.getWriter();w.write(new TextEncoder().encode(str));w.close();const buf=new Uint8Array(await new Response(cs.readable).arrayBuffer());let s='';buf.forEach(b=>s+=String.fromCharCode(b));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
-async function unpack(t){const bin=atob(t.replace(/-/g,'+').replace(/_/g,'/'));const ds=new DecompressionStream('deflate-raw'),w=ds.writable.getWriter();w.write(Uint8Array.from(bin,c=>c.charCodeAt(0)));w.close();return new TextDecoder().decode(await new Response(ds.readable).arrayBuffer())}
-async function linkFor(site){return DB&&tokens()[site.slug]?location.origin+'/'+site.slug:base()+'#v='+await pack(site.code)}
-
-// ---- local list (+ migration) ----
-function load(){try{const v4=JSON.parse(localStorage.getItem(KEY));if(v4)return v4;const v3=JSON.parse(localStorage.getItem('aero_sites_v3'))||[];return v3.map(s=>{try{return{slug:s.slug,code:dec(s.code),createdAt:s.createdAt||Date.now()}}catch{return null}}).filter(Boolean)}catch{return[]}}
-let sites=load(),editing=null;
-function save(){try{localStorage.setItem(KEY,JSON.stringify(sites))}catch{toast('შენახვა ვერ მოხერხდა')}render()}
+// ---- sites (database) ----
+let sites=[],editing=null,ghSrc=null;
+const createSite=async(slug,code,source)=>(await api('/rest/v1/sites',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({slug,code,source:source||null})})).status;
+const patchCode=(slug,code)=>api('/rest/v1/sites?slug=eq.'+slug,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({code})});
+async function loadSites(){
+  if(!sess){sites=[];render();return}
+  try{
+    const r=await api('/rest/v1/sites?select=slug,code,views,source,created_at&user_id=eq.'+sess.id+'&order=created_at.desc');
+    if(r.ok)sites=(await r.json()).map(x=>({slug:x.slug,code:x.code,views:x.views||0,source:x.source,createdAt:Date.parse(x.created_at)}));
+    else toast('სიის ჩატვირთვა ვერ მოხერხდა ('+r.status+')');
+  }catch{toast('ბაზასთან კავშირი ვერ მოხერხდა')}
+  render();
+}
+async function migrate(){
+  let old;try{old=JSON.parse(localStorage.getItem('aero_sites_v4'))}catch{}
+  if(!old||!old.length)return;
+  let n=0;for(const x of old){try{if(await createSite(x.slug,fix(x.code))<300)n++}catch{}}
+  localStorage.removeItem('aero_sites_v4');if(n)toast(n+' ძველი საიტი გადმოვიდა ანგარიშში');
+}
 
 // ---- render ----
 function render(){
-  const q=$('search').value.trim().toLowerCase();
-  const list=sites.filter(s=>s.slug.includes(q));
+  const q=$('search').value.trim().toLowerCase(),so=$('sort').value;
+  const list=sites.filter(s=>s.slug.includes(q)).sort((a,b)=>so==='name'?a.slug.localeCompare(b.slug):so==='size'?bytes(b.code)-bytes(a.code):so==='views'?b.views-a.views:b.createdAt-a.createdAt);
   $('total-sites').textContent=sites.length;
   $('total-size').textContent=kb(sites.reduce((a,s)=>a+bytes(s.code),0));
+  $('total-views').textContent=sites.reduce((a,s)=>a+s.views,0);
+  $('empty-p').textContent=sess?'შექმენი პირველი საიტი ზემოთ!':'შედი ანგარიშში საიტების სანახავად და შესაქმნელად.';
   $('empty-state').style.display=list.length?'none':'block';
   $('sites-container').innerHTML=list.map(s=>`
    <div class="glass card">
      <div class="thumb"><iframe sandbox="" loading="lazy" tabindex="-1" srcdoc="${esc(s.code)}"></iframe></div>
      <div class="in">
        <h4>${esc(s.slug)}.mrx</h4>
-       <div class="meta mono"><span>${kb(bytes(s.code))}</span><span>${timeAgo(s.createdAt)}</span></div>
+       <div class="meta mono"><span>${kb(bytes(s.code))} · 👁 ${s.views}${s.source?' · GitHub':''}</span><span>${timeAgo(s.createdAt)}</span></div>
        <div class="acts" data-slug="${esc(s.slug)}">
          <button class="btn" data-act="view">${ic('eye',14)}ნახვა</button>
          <button class="btn" data-act="open">${ic('ext',14)}</button>
          <button class="btn" data-act="copy">${ic('copy',14)}ლინკი</button>
+         <button class="btn" data-act="share">${ic('share',14)}</button>
+         ${s.source?`<button class="btn" data-act="sync">${ic('sync',14)}</button>`:''}
          <button class="btn" data-act="edit">${ic('pencil',14)}</button>
+         <button class="btn" data-act="dup">${ic('file',14)}</button>
          <button class="btn red" data-act="del">${ic('trash',14)}</button>
        </div>
      </div>
    </div>`).join('');
 }
-
 $('sites-container').addEventListener('click',async e=>{
   const b=e.target.closest('button[data-act]');if(!b)return;
   const slug=b.parentElement.dataset.slug,site=sites.find(s=>s.slug===slug);if(!site)return;
-  const act=b.dataset.act;
+  const act=b.dataset.act,url=linkOf(site);
   if(act==='view')showPreview(site.code,site.slug+'.mrx');
-  if(act==='open')window.open(await linkFor(site),'_blank');
-  if(act==='copy'){const url=await linkFor(site);try{await navigator.clipboard.writeText(url);toast('ლინკი დაკოპირდა!')}catch{prompt('დააკოპირე:',url)}}
+  if(act==='open')window.open(url,'_blank');
+  if(act==='copy'){try{await navigator.clipboard.writeText(url);toast('ლინკი დაკოპირდა!')}catch{prompt('დააკოპირე:',url)}}
+  if(act==='share'){if(navigator.share){try{await navigator.share({title:slug+'.mrx',url})}catch{}}else{try{await navigator.clipboard.writeText(url);toast('ლინკი დაკოპირდა!')}catch{prompt('დააკოპირე:',url)}}}
   if(act==='edit')openModal(site);
-  if(act==='del'&&confirm(slug+'.mrx წაიშალოს?')){const t=tokens()[slug];if(DB&&t)await dbRpc('delete_site',slug,t);setToken(slug,null);sites=sites.filter(s=>s.slug!==slug);save();toast('წაიშალა')}
+  if(act==='dup'){
+    const n=cleanSlug(prompt('ახალი სახელი:',slug+'-2')||'');if(!n)return;
+    const st=await createSite(n,site.code,site.source);
+    if(st===409)return toast('ეს სახელი დაკავებულია!');if(st>=300)return toast('შეცდომა ('+st+')');
+    await loadSites();toast('შეიქმნა: '+n+'.mrx');
+  }
+  if(act==='sync'){
+    const [o,r,br,dir]=site.source.split('|');toast('იტვირთება GitHub-იდან...');
+    try{const x=await ghFetch(o,r,br,dir);const rr=await patchCode(slug,x.code);if(!rr.ok)throw new Error('შეცდომა ('+rr.status+')');site.code=x.code;render();toast('GitHub-იდან განახლდა!')}catch(err){toast(err.message)}
+  }
+  if(act==='del'&&confirm(slug+'.mrx წაიშალოს?')){
+    const r=await api('/rest/v1/sites?slug=eq.'+slug,{method:'DELETE'});
+    if(!r.ok)return toast('შეცდომა ('+r.status+')');
+    sites=sites.filter(s=>s.slug!==slug);render();toast('წაიშალა');
+  }
 });
+$('search').oninput=render;$('sort').onchange=render;
 
-// ---- modal ----
+// ---- editor ----
 const TPL={
  hello:'<h1>გამარჯობა მსოფლიო!</h1>',
  card:'<!DOCTYPE html><html><body style="margin:0;min-height:100vh;display:grid;place-items:center;background:#0f172a;font-family:sans-serif;color:#fff"><div style="text-align:center;padding:40px;border-radius:24px;background:#1e293b"><div style="font-size:64px">👋</div><h1>შენი სახელი</h1><p style="color:#94a3b8">დეველოპერი · დიზაინერი</p></div></body></html>',
  landing:'<!DOCTYPE html><html><body style="margin:0;font-family:sans-serif;background:linear-gradient(135deg,#06b6d4,#6366f1);color:#fff;min-height:100vh;display:grid;place-items:center;text-align:center"><div><h1 style="font-size:48px;margin:0">ჩემი პროექტი</h1><p>მოკლე აღწერა აქ</p><a href="#" style="display:inline-block;margin-top:16px;padding:12px 28px;background:#fff;color:#4f46e5;border-radius:12px;text-decoration:none;font-weight:700">დაიწყე</a></div></body></html>'};
 function openModal(site){
-  editing=site||null;
+  if(!site&&needAuth())return;
+  editing=site||null;ghSrc=null;
   $('modal-title').querySelector('span').textContent=site?'რედაქტირება':'საიტის შექმნა';
   $('site-slug').value=site?site.slug:'';$('site-slug').disabled=!!site;
   $('site-code').value=site?site.code:TPL.hello;
   $('submit-btn').textContent=site?'შენახვა':'გაშვება (Deploy)';
+  $('slug-status').textContent='';$('live').checked=false;$('live-frame').style.display='none';
   $('deploy-modal').classList.add('open');
 }
-const closeModal=()=>$('deploy-modal').classList.remove('open');
 function showPreview(code,title){$('preview-title').textContent=title;$('preview-iframe').srcdoc=code;$('preview-modal').classList.add('open')}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-close]');if(b){b.closest('.modal').classList.remove('open');if($('preview-modal')===b.closest('.modal'))$('preview-iframe').srcdoc=''}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.open').forEach(m=>m.classList.remove('open'))});
 $('new-btn').onclick=()=>openModal();
-$('new-top').onclick=()=>openModal();
-$('close-modal').onclick=closeModal;
-$('close-preview').onclick=()=>{$('preview-modal').classList.remove('open');$('preview-iframe').srcdoc=''};
-$('preview-btn').onclick=()=>showPreview($('site-code').value,'Live Preview');
-$('template').onchange=e=>{if(TPL[e.target.value])$('site-code').value=TPL[e.target.value];e.target.value=''};
+$('gh-btn').onclick=()=>{if(!needAuth())$('gh-modal').classList.add('open')};
+$('preview-btn').onclick=()=>showPreview(fix($('site-code').value),'Live Preview');
+$('template').onchange=e=>{if(TPL[e.target.value]){$('site-code').value=TPL[e.target.value];lv()}e.target.value=''};
+const fillSlug=name=>{if(!$('site-slug').value&&!editing){$('site-slug').value=cleanSlug(name.replace(/\.html?$/i,''))||rndSlug();chk()}};
 $('upload-btn').onclick=()=>$('html-file').click();
-$('html-file').onchange=async e=>{const f=e.target.files[0];if(f){$('site-code').value=await f.text();toast('ფაილი ჩაიტვირთა')}e.target.value=''};
-$('search').oninput=render;
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();$('close-preview').click()}});
+$('html-file').onchange=async e=>{const f=e.target.files[0];if(f){$('site-code').value=await f.text();fillSlug(f.name);lv();toast('ფაილი ჩაიტვირთა')}e.target.value=''};
+$('paste-btn').onclick=async()=>{try{$('site-code').value=await navigator.clipboard.readText();lv();toast('კოდი ჩაიწერა')}catch{toast('ბუფერზე წვდომა ვერ მოხერხდა')}};
+let ct,lt;
+async function chk(){
+  const el=$('slug-status');if(editing){el.textContent='';return}
+  const v=cleanSlug($('site-slug').value);if(!v){el.textContent='';return}
+  let taken=sites.some(x=>x.slug===v);
+  if(!taken){try{const r=await api('/rest/v1/sites?select=slug&slug=eq.'+v);if(r.ok)taken=(await r.json()).length>0}catch{}}
+  el.style.color=taken?'#f87171':'#34d399';el.textContent=taken?'✗ '+v+'.mrx დაკავებულია':'✓ '+v+'.mrx თავისუფალია';
+}
+$('site-slug').oninput=()=>{clearTimeout(ct);ct=setTimeout(chk,400)};
+$('dice').onclick=()=>{if(!editing){$('site-slug').value=rndSlug();chk()}};
+const lv=()=>{if($('live').checked)$('live-frame').srcdoc=fix($('site-code').value)};
+$('live').onchange=()=>{$('live-frame').style.display=$('live').checked?'block':'none';lv()};
+$('site-code').addEventListener('input',()=>{clearTimeout(lt);lt=setTimeout(lv,500)});
 
 $('deploy-form').onsubmit=async e=>{
-  e.preventDefault();
-  const code=$('site-code').value;
+  e.preventDefault();if(needAuth())return;
+  const code=fix($('site-code').value);
+  if(code.length>500000)return toast('ძალიან დიდია (მაქს. ~500 KB)');
   if(editing){
-    editing.code=code;
-    if(DB){const t=tokens()[editing.slug];
-      if(t)await dbRpc('update_site',editing.slug,t,code);
-      else{const nt=rnd(),st=await dbInsert(editing.slug,code,nt);if(st<300)setToken(editing.slug,nt);else toast('ეს სახელი ბაზაში დაკავებულია')}}
-    save();closeModal();toast('განახლდა!');return;
+    const r=await patchCode(editing.slug,code);if(!r.ok)return toast('შეცდომა ('+r.status+')');
+    editing.code=code;$('deploy-modal').classList.remove('open');render();toast('განახლდა!');return;
   }
-  const slug=$('site-slug').value.toLowerCase().replace(/[^a-z0-9-]/g,'').replace(/^-+|-+$/g,'');
-  if(!slug)return toast('გამოიყენე ლათინური ასოები, ციფრები ან -');
-  if(sites.some(s=>s.slug===slug))return toast('ეს სახელი დაკავებულია!');
-  if(DB){const t=rnd();let st;
-    try{st=await dbInsert(slug,code,t)}catch{return toast('ბაზასთან კავშირი ვერ მოხერხდა')}
-    if(st===409)return toast('ეს სახელი დაკავებულია!');
-    if(st>=300)return toast('ბაზის შეცდომა ('+st+')');
-    setToken(slug,t)}
-  sites.unshift({slug,code,createdAt:Date.now()});
-  save();closeModal();toast(slug+'.mrx გაშვებულია!');
+  const slug=cleanSlug($('site-slug').value).replace(/^-+|-+$/g,'');
+  if(!slug||slug==='srcdoc')return toast('გამოიყენე ლათინური ასოები, ციფრები ან -');
+  let st;try{st=await createSite(slug,code,ghSrc)}catch{return toast('ბაზასთან კავშირი ვერ მოხერხდა')}
+  if(st===409)return toast('ეს სახელი დაკავებულია!');
+  if(st===401||st===403)return toast('ჯერ შედი ანგარიშში');
+  if(st>=300)return toast('ბაზის შეცდომა ('+st+')');
+  $('deploy-modal').classList.remove('open');await loadSites();toast(slug+'.mrx გაშვებულია!');
+};
+
+// ---- GitHub import ----
+async function areplace(str,re,fn){const ms=[...str.matchAll(re)];const rs=await Promise.all(ms.map(m=>fn(...m)));let i=0;return str.replace(re,()=>rs[i++])}
+const dataUrl=async u=>{const bl=await(await fetch(u)).blob();return new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result);f.readAsDataURL(bl)})};
+async function ghFetch(o,r,br,dir){
+  if(!br){
+    const i=await fetch('https://api.github.com/repos/'+o+'/'+r);
+    if(!i.ok)throw new Error(i.status===404?'რეპო ვერ მოიძებნა (ან პრივატულია)':'GitHub-ის შეცდომა ('+i.status+')');
+    br=(await i.json()).default_branch;
+  }
+  dir=(dir||'').replace(/^\/+|\/+$/g,'');
+  const base='https://raw.githubusercontent.com/'+o+'/'+r+'/'+br+'/'+(dir?dir+'/':'');
+  const g=await fetch(base+'index.html');if(!g.ok)throw new Error('index.html ვერ მოიძებნა ('+br+')');
+  let h=await g.text();
+  const abs=u=>/^(https?:|data:|\/\/|#|mailto:|tel:)/i.test(u)?null:new URL(u.replace(/^\//,''),base).href;
+  const get=async u=>{const x=await fetch(u);if(!x.ok)throw 0;return x};
+  h=await areplace(h,/<link\b[^>]*rel=["']stylesheet["'][^>]*>/gi,async tag=>{
+    const u=abs((tag.match(/href=["']([^"']+)["']/i)||[])[1]||'');if(!u)return tag;
+    try{return '<style>'+await(await get(u)).text()+'</style>'}catch{return tag}});
+  h=await areplace(h,/<script\b[^>]*\bsrc=["']([^"']+)["'][^>]*>\s*<\/script>/gi,async(m,s)=>{
+    const u=abs(s);if(!u)return m;
+    try{const t=await(await get(u)).text();return '<script'+(/type=["']module["']/i.test(m)?' type="module"':'')+'>'+t.replace(/<\/script/gi,'<\\/script')+'<\/script>'}catch{return m}});
+  h=await areplace(h,/(<img\b[^>]*?\ssrc=["'])([^"']+)(["'])/gi,async(m,a,s,z)=>{
+    const u=abs(s);if(!u)return m;try{return a+await dataUrl(u)+z}catch{return m}});
+  if(h.length>500000)throw new Error('საიტი ძალიან დიდია (მაქს. ~500 KB, სურათების ჩათვლით)');
+  return{code:fix(h),source:[o,r,br,dir].join('|')};
+}
+$('gh-go').onclick=async()=>{
+  if(needAuth())return;
+  const m=$('gh-repo').value.trim().replace(/^https?:\/\/(www\.)?github\.com\//i,'').replace(/\.git$/,'').replace(/\/+$/,'').split('/');
+  if(m.length<2||!m[0]||!m[1])return toast('ჩაწერე owner/repo');
+  let br=$('gh-branch').value.trim(),dir=$('gh-dir').value.trim();
+  if(m[2]==='tree'&&m[3]){br=br||m[3];dir=dir||m.slice(4).join('/')}
+  const btn=$('gh-go');btn.disabled=true;btn.textContent='იტვირთება...';
+  try{
+    const x=await ghFetch(m[0],m[1],br,dir);
+    $('gh-modal').classList.remove('open');openModal();
+    ghSrc=x.source;$('site-code').value=x.code;$('site-slug').value=cleanSlug(m[1])||rndSlug();chk();lv();
+    toast('იმპორტი დასრულდა, დააჭირე გაშვებას');
+  }catch(err){toast(err.message||'იმპორტი ვერ მოხერხდა')}
+  btn.disabled=false;btn.textContent='იმპორტი';
 };
 
 // ---- backup ----
-$('export-btn').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(sites,null,1)],{type:'application/json'}));a.download='aero-host-backup.json';a.click()};
-$('import-btn').onclick=()=>$('import-file').click();
+$('export-btn').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(sites.map(s=>({slug:s.slug,code:s.code})),null,1)],{type:'application/json'}));a.download='aero-host-backup.json';a.click()};
+$('import-btn').onclick=()=>{if(!needAuth())$('import-file').click()};
 $('import-file').onchange=async e=>{
   try{const data=JSON.parse(await e.target.files[0].text());let n=0;
-    data.forEach(s=>{if(s&&s.slug&&typeof s.code==='string'&&!sites.some(x=>x.slug===s.slug)){sites.push({slug:String(s.slug),code:s.code,createdAt:s.createdAt||Date.now()});n++}});
-    save();toast(n+' საიტი დაემატა')}catch{toast('ფაილი არასწორია')}
+    for(const s of data){if(s&&s.slug&&typeof s.code==='string'&&await createSite(cleanSlug(String(s.slug)),fix(s.code))<300)n++}
+    await loadSites();toast(n+' საიტი დაემატა')}catch{toast('ფაილი არასწორია')}
   e.target.value='';
 };
+
+// ---- drag & drop ----
+let dc=0;const dz=$('drop');
+addEventListener('dragenter',e=>{e.preventDefault();dc++;dz.classList.add('on')});
+addEventListener('dragleave',()=>{dc=Math.max(0,dc-1);if(!dc)dz.classList.remove('on')});
+addEventListener('dragover',e=>e.preventDefault());
+addEventListener('drop',async e=>{e.preventDefault();dc=0;dz.classList.remove('on');const f=e.dataTransfer.files[0];if(!f||!/\.html?$/i.test(f.name))return toast('ჩააგდე .html ფაილი');openModal();if(!sess)return;$('site-code').value=await f.text();fillSlug(f.name);lv()});
 
 // ---- canvas background ----
 function bgAnim(){
@@ -278,19 +445,18 @@ function viewer(code,name){
   document.getElementById('v').srcdoc=code;
 }
 (async function init(){
-  hydrate();
-  if(location.hash.startsWith('#v=')){try{return viewer(await unpack(location.hash.slice(3)))}catch{}}
+  hydrate();renderUser();
   const slug=decodeURIComponent(location.pathname).replace(/^\/+|\/+$/g,'').replace(/\.mrx$/,'').replace(/index\.html$/,'').toLowerCase();
   if(slug&&slug!=='srcdoc'&&/^[a-z0-9-]{1,40}$/.test(slug)){
     let code=null;
-    if(DB){try{code=await dbGet(slug)}catch{}}
-    if(code===null){const x=sites.find(y=>y.slug===slug);if(x)code=x.code}
-    if(code!==null)return viewer(code,slug);
+    try{const r=await api('/rest/v1/sites?select=code&slug=eq.'+slug);if(r.ok){const j=await r.json();code=j[0]?j[0].code:null}}catch{}
+    if(code!==null){api('/rest/v1/rpc/hit',{method:'POST',body:JSON.stringify({p_slug:slug})}).catch(()=>{});return viewer(code,slug)}
     document.body.innerHTML='<div style="min-height:100vh;display:grid;place-items:center;font-family:sans-serif;text-align:center;color:#fff"><div><h1>404</h1><p>'+esc(slug)+' ვერ მოიძებნა</p><a href="/" style="color:#22d3ee">მთავარი</a></div></div>';
     return;
   }
   try{bgAnim()}catch{}
   render();
+  if(sess){await migrate();await loadSites()}
 })();
 </script>
 </body>
